@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传和下载</title>
+</head>
+<body>
+
+  <form id="upload" enctype="multipart/form-data" method="post" action="/uploadAndDownload/uploadFileAction" >
+      <input type="file" name="uploadFile" />
+      <input type="hidden" name="id" value="12" />
+      <input type="button" value="文件上传" onclick="doUpload()" />
+  </form>
+
+  <input  type="button" value="下载文件" onclick="doDownload()" />
+  <form id="download" method="post" action="/uploadAndDownload/downloadFileAction" >
+  </form>
+
+  <script type="text/javascript" >
+      function doUpload() {
+          var upl = document.getElementById("upload");
+          upl.submit();
+      }
+
+      function doDownload() {
+          var udl = document.getElementById("download");
+          udl.submit();
+      }
+  </script>
+
+</body>
+</html>
