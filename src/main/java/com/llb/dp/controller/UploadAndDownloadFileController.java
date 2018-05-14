@@ -66,31 +66,40 @@ public class UploadAndDownloadFileController {
 
     @RequestMapping("/downloadFileAction")
     public void downloadFileAction(HttpServletResponse request, HttpServletResponse response){
-        response.setCharacterEncoding(request.getCharacterEncoding());
-        response.setContentType("application/octet-stream");
-        FileInputStream fis = null;
+//        String testdir = "/Users/robinluo/source/deeplink/app/";
+        String debugdir = "/Users/robinluo/source/deeplink/app/build/outputs/apk/";
+        String pubdir = "/root/";
 
-        String test = "/Users/robinluo/source/deeplink/app/build/outputs/apk/testdl.apk";
-        String pub = "/root/testdl.apk";
-
+        String fileName = "testdl.apk";
+//        String fileName = "app-debug.apk";
+        response.setHeader("content-type", "application/octet-stream");
+        response.setContentType("application/force-download");
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        byte[] buff = new byte[1024 ];
+        BufferedInputStream bis = null;
+        OutputStream os = null;
         try {
-            File file = new File(test);
-            fis = new FileInputStream(file);
-            response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
-            response.flushBuffer();
-        }catch (FileNotFoundException e){
+            os = response.getOutputStream();
+            bis = new BufferedInputStream(new FileInputStream(new File(pubdir
+                    , fileName)));
+            int i = bis.read(buff);
+            while (i != -1) {
+                os.write(buff, 0, i);
+                os.flush();
+                i = bis.read(buff);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }finally {
-            if (fis != null){
+        } finally {
+            if (bis != null) {
                 try {
-                    fis.close();
-                }catch (IOException e){
+                    bis.close();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+        System.out.println("success");
     }
 
 }
