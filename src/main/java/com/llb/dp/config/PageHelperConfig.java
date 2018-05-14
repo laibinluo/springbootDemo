@@ -14,7 +14,6 @@ import java.util.Properties;
 @Configuration
 public class PageHelperConfig {
 
-
     @Value("${pagehelper.helperDialect}")
     private String helperDialect;
 

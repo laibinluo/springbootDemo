@@ -1,6 +1,7 @@
 server:
   port: 8080
 
+
 spring:
     datasource:
         name: test
@@ -41,4 +42,12 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
   returnPageInfo: check
+
+logging:
+  path: /Users/robinluo/source/log
+#  file: /Users/robinluo/source/log/dpserver.log
+  level:
+    com.llb : debug
+    root : warn
+
 
